@@ -100,6 +100,26 @@ moves the per-layer alphas by at most 0.1 and changes R² by less than 0.01
 against a plain fine-tuned TabPFN control. The new parameters are prior-level
 and need meta-fine-tuning across many tasks (`scripts/meta_finetune.py`).
 
+Meta-fine-tuning across random synthetic block-missing tasks
+(`results/meta_ft*`, 300 steps, 4 tasks of 300 rows per step, held-out Friedman
+block task, 2 seeds):
+
+| step | full fine-tune (base LR 1e-5, new LR 5e-3) | frozen base (new params only) |
+|---|---|---|
+| 0 | 0.349 | 0.349 |
+| 100 | 0.340 | 0.348 |
+| 200 | 0.335 | 0.348 |
+| 300 | 0.335 | 0.348 |
+
+The learned alphas settle in a stable pattern (about -0.2 in layers 7 to 10,
++0.3 in layer 16) that is the same in both runs, so the gradient signal is
+consistent, but the held-out score does not move. Updating the pretrained
+weights on my synthetic prior costs 0.014 R². Conclusion at this stage: on top
+of TabPFN v2.5, whose NaN indicator already encodes the pattern, the three
+components give no measurable gain in this setting. A different data regime
+(real multi-source data with source effects, MNAR) or a richer prior for
+meta-fine-tuning is needed before any claim can be made.
+
 ## Evaluation plan
 
 Ablate the three components separately (the config switches exist for this),
