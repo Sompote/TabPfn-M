@@ -153,24 +153,24 @@ class TabPFNMTransformer(PerFeatureTransformer):
         )
         self.m_holder.ctx = ctx if (cfg.feature_mask or cfg.pattern_bias) else None
 
-        try:
-            return self._forward_body(
-                x,
-                y,
-                ctx=ctx,
-                seq_len=seq_len,
-                batch_size=batch_size,
-                num_features=num_features,
-                single_eval_pos=single_eval_pos,
-                only_return_standard_out=only_return_standard_out,
-                categorical_inds=categorical_inds,
-                force_recompute_layer=force_recompute_layer,
-                save_peak_memory_factor=save_peak_memory_factor,
-                recon_targets=recon_targets,
-                recon_cells=recon_cells,
-            )
-        finally:
-            self.m_holder.ctx = None
+        # The context stays set after the forward: activation checkpointing
+        # recomputes the layers during backward and must see the same masks.
+        # The next forward overwrites it.
+        return self._forward_body(
+            x,
+            y,
+            ctx=ctx,
+            seq_len=seq_len,
+            batch_size=batch_size,
+            num_features=num_features,
+            single_eval_pos=single_eval_pos,
+            only_return_standard_out=only_return_standard_out,
+            categorical_inds=categorical_inds,
+            force_recompute_layer=force_recompute_layer,
+            save_peak_memory_factor=save_peak_memory_factor,
+            recon_targets=recon_targets,
+            recon_cells=recon_cells,
+        )
 
     def _forward_body(  # noqa: C901, PLR0912, PLR0913
         self,
