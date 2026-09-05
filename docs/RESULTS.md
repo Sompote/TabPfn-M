@@ -66,7 +66,7 @@ members. R² on the held-out rows. OMC target, source-block design and grouped f
 | loso | zenodo:14251190 | 38 | 0.185 | 0.245 | 0.240 | 0.237 |
 | loso | zenodo:19242689 | 7 | -0.023 | -0.425 | -0.422 | -0.432 |
 | loso | zenodo:20737270 | 269 | 0.655 | 0.665 | 0.665 | 0.666 |
-| group5 | **mean** (7-row source excluded) | | 0.702 | 0.713 | 0.707 | 0.707 |
+| group5 | **mean** (folds 0-3, the 4 complete folds) | | 0.696 | 0.707 | 0.707 | 0.707 |
 | loso | **mean** (7-row source excluded) | | 0.412 | 0.403 | 0.401 | 0.402 |
 
 Fine-tuned on the other five sources (10 epochs, LR 1e-5, new-parameter LR 1e-2), LOSO:
