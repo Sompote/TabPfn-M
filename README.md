@@ -76,6 +76,30 @@ est = TabPFNMRegressor(device="cpu", m_weights="tabpfn_m.pt")
 Tests: `python -m pytest tests -q`. Benchmark: `python scripts/benchmark_missing.py`.
 Fine-tuning demo: `python scripts/finetune_demo.py`.
 
+## Results so far (6 Sep 2026, TabPFN v2.5 default checkpoint, CPU)
+
+Zero-shot, no training (`results/zero_shot`, 3 seeds, 4 ensemble members,
+R² mean over seeds):
+
+| dataset / design | HGB | TabPFN mean-impute | TabPFN | M mask | M mask+bias(1) |
+|---|---|---|---|---|---|
+| friedman1 / block 3-4 of 7 | 0.305 | 0.408 | 0.412 | 0.412 | 0.408 |
+| friedman1 / mcar50 | 0.402 | 0.456 | 0.497 | 0.497 | 0.494 |
+| compaction MDD / block 3-4 of 7 | 0.481 | 0.534 | 0.537 | 0.537 | 0.532 |
+| compaction MDD / mcar50 | 0.455 | 0.499 | 0.533 | 0.532 | 0.529 |
+| diabetes / block 3-4 of 7 | 0.074 | 0.239 | 0.237 | 0.238 | 0.230 |
+
+Mean R² difference to TabPFN over all 15 cells: 0.000 (mask), -0.003 (mask +
+bias). Untrained, the components are inert. TabPFN's NaN indicator already
+carries the pattern information: with a source-dependent target offset the
+pattern reveals the source, and TabPFN on block-missing data reaches R² 0.83
+where the same model on complete data (source invisible) reaches 0.17.
+
+Single-dataset fine-tuning (`results/finetune_friedman*`, 500 rows, 30 epochs)
+moves the per-layer alphas by at most 0.1 and changes R² by less than 0.01
+against a plain fine-tuned TabPFN control. The new parameters are prior-level
+and need meta-fine-tuning across many tasks (`scripts/meta_finetune.py`).
+
 ## Evaluation plan
 
 Ablate the three components separately (the config switches exist for this),
