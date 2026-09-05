@@ -24,7 +24,7 @@ plain TabPFN:
 Python 3.10 or newer. CPU is enough.
 
 ```bash
-git clone https://github.com/Sompote/TabPFN-M
+git clone https://github.com/Sompote/TabPfn-M
 cd TabPFN-M
 pip install -e .
 ```
