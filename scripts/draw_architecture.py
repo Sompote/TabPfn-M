@@ -81,7 +81,7 @@ for r in range(6):
     ax.add_patch(Rectangle((gx + 3 * 0.5 + 0.1, y), 0.42, 0.34, fc=TGT, ec="white"))
 label(gx + 0.75, gy + 0.52, "3 feature groups", 8)
 label(gx + 1.81, gy + 0.52, "target", 8)
-label(9.17, 5.27, "1b  +a : learned absence vector on fully missing group tokens", 7.9, color=C1)
+label(9.17, 5.3, "1b  +a : learned absence vector\non fully missing group tokens", 8, color=C1)
 label(9.17, 5.62, "64 thinking rows prepended (not drawn)", 7.8, style="italic", color="#666666")
 arrow(6.95, 4.1, 8.7, 5.05, color=C1, ls="--")
 
