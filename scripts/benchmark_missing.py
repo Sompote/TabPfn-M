@@ -42,7 +42,7 @@ from sklearn.model_selection import train_test_split  # noqa: E402
 from tabpfn import TabPFNRegressor  # noqa: E402
 from tabpfn_m import TabPFNMConfig, TabPFNMRegressor  # noqa: E402
 
-COMPACTION = Path.home() / "env1/paper/compaction/paper22_aug/data.csv"
+COMPACTION = Path(__file__).resolve().parents[1] / "data/compaction.csv"
 
 
 # ------------------------------------------------------------------ datasets ---

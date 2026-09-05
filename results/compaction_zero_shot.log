@@ -1,0 +1,35 @@
+rows 2854 sources {'figshare:10.6084/m9.figshare.28681187': 395, 'figshare:10.6084/m9.figshare.32955851': 169, 'ltpp-sdr39': 1976, 'zenodo:10.5281/zenodo.14251190': 38, 'zenodo:10.5281/zenodo.19242689': 7, 'zenodo:10.5281/zenodo.20737270': 269}
+missing frac per source (real):
+                                         LL    PL   PI  fines_pct  sand_pct  energy_kJm3   Gs
+figshare:10.6084/m9.figshare.28681187  0.00  0.00  0.0        0.0       0.0          0.0  0.0
+figshare:10.6084/m9.figshare.32955851  0.00  0.00  0.0        0.0       1.0          0.0  0.0
+ltpp-sdr39                             0.07  0.07  0.0        0.0       0.0          0.0  0.0
+zenodo:10.5281/zenodo.14251190         0.00  0.00  0.0        0.0       0.0          0.0  0.0
+zenodo:10.5281/zenodo.19242689         0.00  0.00  0.0        0.0       0.0          0.0  0.0
+zenodo:10.5281/zenodo.20737270         0.00  0.00  0.0        0.0       0.0          0.0  0.0
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare hgb          R2= 0.4167 RMSE=0.1379 n=395 (0s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare tabpfn       R2= 0.4956 RMSE=0.1282 n=395 (23s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare m_mask       R2= 0.4917 RMSE=0.1287 n=395 (22s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare m_mask_bias  R2= 0.4924 RMSE=0.1286 n=395 (30s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare hgb          R2= 0.1962 RMSE=0.1550 n=169 (1s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare tabpfn       R2= 0.2267 RMSE=0.1520 n=169 (30s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare m_mask       R2= 0.2264 RMSE=0.1520 n=169 (32s)
+real         MDD_Mgm3  loso   figshare:10.6084/m9.figshare m_mask_bias  R2= 0.2227 RMSE=0.1524 n=169 (37s)
+real         MDD_Mgm3  loso   ltpp-sdr39                   hgb          R2= 0.6077 RMSE=0.1317 n=1976 (1s)
+real         MDD_Mgm3  loso   ltpp-sdr39                   tabpfn       R2= 0.3809 RMSE=0.1655 n=1976 (27s)
+real         MDD_Mgm3  loso   ltpp-sdr39                   m_mask       R2= 0.3798 RMSE=0.1656 n=1976 (32s)
+real         MDD_Mgm3  loso   ltpp-sdr39                   m_mask_bias  R2= 0.3928 RMSE=0.1639 n=1976 (37s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.142511 hgb          R2= 0.1846 RMSE=0.0856 n=38 (2s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.142511 tabpfn       R2= 0.2450 RMSE=0.0824 n=38 (43s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.142511 m_mask       R2= 0.2400 RMSE=0.0827 n=38 (43s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.142511 m_mask_bias  R2= 0.2372 RMSE=0.0828 n=38 (41s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.192426 hgb          R2=-0.0229 RMSE=0.1486 n=7 (2s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.192426 tabpfn       R2=-0.4248 RMSE=0.1754 n=7 (46s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.192426 m_mask       R2=-0.4222 RMSE=0.1753 n=7 (46s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.192426 m_mask_bias  R2=-0.4315 RMSE=0.1758 n=7 (60s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 hgb          R2= 0.6548 RMSE=0.1310 n=269 (2s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 tabpfn       R2= 0.6649 RMSE=0.1291 n=269 (52s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 m_mask       R2= 0.6651 RMSE=0.1291 n=269 (53s)
+real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 m_mask_bias  R2= 0.6659 RMSE=0.1289 n=269 (66s)
+real         MDD_Mgm3  group5 fold0                        hgb          R2= 0.7387 RMSE=0.1165 n=571 (3s)
+real         MDD_Mgm3  group5 fold0                        tabpfn       R2= 0.7580 RMSE=0.1121 n=571 (74s)

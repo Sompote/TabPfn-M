@@ -29,7 +29,7 @@ from sklearn.model_selection import GroupKFold
 from tabpfn import TabPFNRegressor
 from tabpfn_m import TabPFNMConfig, TabPFNMRegressor
 
-DATA = Path.home() / "env1/paper/compaction/paper22_aug/data.csv"
+DATA = Path(__file__).resolve().parents[1] / "data/compaction.csv"
 FEATS = ["LL", "PL", "PI", "fines_pct", "sand_pct", "energy_kJm3", "Gs"]
 TARGETS = ["MDD_Mgm3", "OMC_frac"]
 

@@ -1,0 +1,75 @@
+name: experiments
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: "Which experiment to run"
+        type: choice
+        default: compaction_zero_shot
+        options:
+          - tests
+          - zero_shot_benchmark
+          - compaction_zero_shot
+          - compaction_finetune_MDD
+          - compaction_finetune_OMC
+          - meta_finetune_frozen
+          - meta_finetune_full
+      extra_args:
+        description: "Extra CLI arguments appended to the script"
+        type: string
+        default: ""
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      # v2.5 default weights are gated on Hugging Face; with an HF_TOKEN secret from an
+      # account that accepted the license they download, otherwise fall back to the
+      # public v2 weights (numbers then differ from the local v2.5 runs).
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      TABPFN_MODEL_VERSION: ${{ secrets.HF_TOKEN != '' && 'v2.5' || 'v2' }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[dev]" huggingface_hub
+      - name: Cache TabPFN weights
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/tabpfn
+          key: tabpfn-weights-${{ env.TABPFN_MODEL_VERSION }}
+      - name: Run
+        run: |
+          set -x
+          mkdir -p results
+          case "${{ inputs.script }}" in
+            tests)
+              python -m pytest tests -q ;;
+            zero_shot_benchmark)
+              python scripts/benchmark_missing.py --out results/zero_shot ${{ inputs.extra_args }} ;;
+            compaction_zero_shot)
+              python scripts/compaction_loso.py --out results/compaction_zero_shot ${{ inputs.extra_args }} ;;
+            compaction_finetune_MDD)
+              python scripts/compaction_loso.py --finetune --designs real source_block --targets MDD_Mgm3 --folds loso --out results/compaction_finetune_MDD ${{ inputs.extra_args }} ;;
+            compaction_finetune_OMC)
+              python scripts/compaction_loso.py --finetune --designs real source_block --targets OMC_frac --folds loso --out results/compaction_finetune_OMC ${{ inputs.extra_args }} ;;
+            meta_finetune_frozen)
+              python scripts/meta_finetune.py --freeze-base --out results/meta_ft_frozen ${{ inputs.extra_args }} ;;
+            meta_finetune_full)
+              python scripts/meta_finetune.py --out results/meta_ft ${{ inputs.extra_args }} ;;
+          esac
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ inputs.script }}-${{ github.run_id }}
+          path: results/
+          if-no-files-found: ignore

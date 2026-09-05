@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tabpfn_m"
+version = "0.1.0"
+description = "TabPFN-M: TabPFN with missingness-aware attention for incomplete feature sets"
+requires-python = ">=3.10"
+dependencies = [
+  "tabpfn==6.4.1",
+  "torch>=2.2",
+  "numpy",
+  "pandas",
+  "scikit-learn",
+  "einops",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["tabpfn_m"]
