@@ -64,7 +64,10 @@ def load_datasets(max_rows: int, seed: int) -> dict[str, tuple[np.ndarray, np.nd
 
 
 # --------------------------------------------------------------- missingness ---
-def inject_block(X: np.ndarray, rng: np.random.Generator, n_sources: int, keep: tuple[int, int]) -> np.ndarray:
+def inject_block(X: np.ndarray, rng: np.random.Generator, n_sources: int, keep: tuple[int, int],
+                 return_src: bool = False):
+    """Hide features by pseudo-source. Each source observes a fixed subset of
+    ``keep[0]``..``keep[1]`` features."""
     n, f = X.shape
     src = rng.integers(0, n_sources, size=n)
     subsets = []
@@ -75,7 +78,7 @@ def inject_block(X: np.ndarray, rng: np.random.Generator, n_sources: int, keep: 
     for i in range(n):
         hide = [j for j in range(f) if j not in subsets[src[i]]]
         Xm[i, hide] = np.nan
-    return Xm
+    return (Xm, src) if return_src else Xm
 
 
 def inject_mcar(X: np.ndarray, rng: np.random.Generator, rate: float) -> np.ndarray:

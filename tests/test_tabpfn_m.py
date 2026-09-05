@@ -198,3 +198,36 @@ def test_estimator_roundtrip():
     p = est.predict(Xm[180:])
     assert p.shape == (60,) and np.isfinite(p).all()
     assert "m_config" in est.get_params()
+
+
+# ---------------------------------------------------------------- finetuning ---
+def test_param_group_optimizer_builds_two_groups(fitted):
+    from tabpfn.finetuning import finetuned_base as fb
+    from tabpfn_m.finetune import _param_group_optimizer
+
+    reg, *_ = fitted
+    m = upgrade_model(reg.models_[0], TabPFNMConfig(alpha_init=0.0, learn_alpha=True))
+    with _param_group_optimizer(lambda: m, new_lr=1e-2, freeze_base=False):
+        opt = fb.get_and_init_optimizer(model_parameters=m.parameters(), learning_rate=1e-5, weight_decay=0.01)
+    assert len(opt.param_groups) == 2
+    assert opt.param_groups[0]["lr"] == pytest.approx(1e-5)
+    assert opt.param_groups[1]["lr"] == pytest.approx(1e-2)
+    assert len(opt.param_groups[1]["params"]) == len(m.m_new_parameters())
+    with _param_group_optimizer(lambda: m, new_lr=1e-2, freeze_base=True):
+        opt = fb.get_and_init_optimizer(model_parameters=m.parameters(), learning_rate=1e-5, weight_decay=0.01)
+    assert len(opt.param_groups) == 1
+    assert all(not p.requires_grad for p in m.parameters() if id(p) not in {id(q) for q in m.m_new_parameters()})
+    for p in m.parameters():
+        p.requires_grad_(True)
+
+
+def test_classifier_with_missing_features():
+    from tabpfn_m import TabPFNMClassifier
+
+    X, Xm, y = _block_data()
+    yc = (y > np.median(y)).astype(int)
+    clf = TabPFNMClassifier(device="cpu", n_estimators=1, random_state=0, m_config=TabPFNMConfig(alpha_init=1.0, learn_alpha=False))
+    clf.fit(Xm[:180], yc[:180])
+    proba = clf.predict_proba(Xm[180:])
+    assert proba.shape == (60, 2) and np.allclose(proba.sum(1), 1.0, atol=1e-4)
+    assert (clf.predict(Xm[180:]) == yc[180:]).mean() > 0.55

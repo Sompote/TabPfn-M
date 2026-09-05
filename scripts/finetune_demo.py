@@ -27,13 +27,20 @@ ap.add_argument("--lr", type=float, default=1e-5)
 ap.add_argument("--new-lr", type=float, default=1e-2)
 ap.add_argument("--recon", type=float, default=0.1)
 ap.add_argument("--seed", type=int, default=0)
+ap.add_argument("--source-shift", type=float, default=0.0,
+                help="std of a per-source offset added to y, in units of std(y); makes the pattern informative")
 ap.add_argument("--out", type=Path, default=Path("results/finetune_friedman"))
 a = ap.parse_args(); a.out.mkdir(parents=True, exist_ok=True)
 
 X, y = make_friedman1(n_samples=a.n_train + a.n_test, n_features=7, noise=0.5, random_state=a.seed)
+# One block design over train+test so the same sources (and offsets) appear in both.
+Xm, src = inject_block(X, np.random.default_rng(a.seed + 1), n_sources=4, keep=(3, 4), return_src=True)
+if a.source_shift > 0:
+    offsets = np.random.default_rng(a.seed + 3).normal(0, a.source_shift * y.std(), size=4)
+    y = y + offsets[src]
+    print("source offsets:", np.round(offsets, 3), flush=True)
 Xtr, Xte, ytr, yte = X[: a.n_train], X[a.n_train :], y[: a.n_train], y[a.n_train :]
-Xtr_m = inject_block(Xtr, np.random.default_rng(a.seed + 1), n_sources=4, keep=(3, 4))
-Xte_m = inject_block(Xte, np.random.default_rng(a.seed + 2), n_sources=4, keep=(3, 4))
+Xtr_m, Xte_m = Xm[: a.n_train], Xm[a.n_train :]
 res = {}
 def log(k, v):
     res[k] = float(v); print(f"{k:45s} R2 {v:.4f}", flush=True)
