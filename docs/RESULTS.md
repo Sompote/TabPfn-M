@@ -46,3 +46,35 @@ components give no measurable gain in this setting. A different data regime
 (real multi-source data with source effects, MNAR) or a richer prior for
 meta-fine-tuning is needed before any claim can be made.
 
+
+## Compaction database (partial, run stopped 6 Sep 2026)
+
+2,854 records from 6 public sources, 7 numeric features, target MDD (Mg/m³), real missingness
+(one figshare source never reports sand_pct; LL/PL 7 % missing in LTPP). Zero-shot, 4 ensemble
+members. R² on the held-out rows. OMC target, source-block design and grouped fold 5 were not run.
+
+| folds | held-out | n test | HGB | TabPFN | TabPFN-M mask | TabPFN-M mask + bias |
+|---|---|---|---|---|---|---|
+| group5 | fold0 | 571 | 0.739 | 0.758 | 0.758 | 0.757 |
+| group5 | fold1 | 571 | 0.743 | 0.750 | 0.751 | 0.750 |
+| group5 | fold2 | 571 | 0.554 | 0.598 | 0.598 | 0.597 |
+| group5 | fold3 | 571 | 0.748 | 0.722 | 0.722 | 0.723 |
+| group5 | fold4 | 570 | 0.726 | 0.736 |  |  |
+| loso | figshare:28681187 | 395 | 0.417 | 0.496 | 0.492 | 0.492 |
+| loso | figshare:32955851 | 169 | 0.196 | 0.227 | 0.226 | 0.223 |
+| loso | ltpp-sdr39 | 1976 | 0.608 | 0.381 | 0.380 | 0.393 |
+| loso | zenodo:14251190 | 38 | 0.185 | 0.245 | 0.240 | 0.237 |
+| loso | zenodo:19242689 | 7 | -0.023 | -0.425 | -0.422 | -0.432 |
+| loso | zenodo:20737270 | 269 | 0.655 | 0.665 | 0.665 | 0.666 |
+| group5 | **mean** (7-row source excluded) | | 0.702 | 0.713 | 0.707 | 0.707 |
+| loso | **mean** (7-row source excluded) | | 0.412 | 0.403 | 0.401 | 0.402 |
+
+Fine-tuned on the other five sources (10 epochs, LR 1e-5, new-parameter LR 1e-2), LOSO:
+
+| held-out | n test | TabPFN fine-tuned | TabPFN-M fine-tuned | TabPFN zero-shot |
+|---|---|---|---|---|
+| figshare:28681187 | 395 | 0.486 | 0.488 | 0.496 |
+| figshare:32955851 | 169 | 0.205 |  | 0.227 |
+
+TabPFN-M tracks TabPFN within 0.012 R² on every fold. Fine-tuning on the other sources lowers
+transfer on both folds completed. HGB beats TabPFN by 0.23 R² when the large LTPP source is held out.
