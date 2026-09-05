@@ -33,3 +33,6 @@ real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 m_mask       R2= 0.66
 real         MDD_Mgm3  loso   zenodo:10.5281/zenodo.207372 m_mask_bias  R2= 0.6659 RMSE=0.1289 n=269 (66s)
 real         MDD_Mgm3  group5 fold0                        hgb          R2= 0.7387 RMSE=0.1165 n=571 (3s)
 real         MDD_Mgm3  group5 fold0                        tabpfn       R2= 0.7580 RMSE=0.1121 n=571 (74s)
+real         MDD_Mgm3  group5 fold0                        m_mask       R2= 0.7580 RMSE=0.1121 n=571 (97s)
+real         MDD_Mgm3  group5 fold0                        m_mask_bias  R2= 0.7572 RMSE=0.1123 n=571 (71s)
+real         MDD_Mgm3  group5 fold1                        hgb          R2= 0.7425 RMSE=0.1100 n=571 (5s)
