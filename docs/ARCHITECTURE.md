@@ -4,6 +4,10 @@ See the README for what the model is for and how to use it.
 
 ## Architecture
 
+![TabPFN-M architecture](figures/tabpfn_m_architecture.png)
+
+The figure is drawn by `scripts/draw_architecture.py`. The flowchart below shows the same forward pass as a graph.
+
 TabPFN represents a table as a grid of tokens: one token per (row, feature
 group) plus one target token per row. Each layer runs attention along both
 axes. TabPFN-M inserts three things into that grid without changing the

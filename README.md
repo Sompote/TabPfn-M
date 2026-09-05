@@ -17,12 +17,7 @@ plain TabPFN:
 3. **Fine-tuning for block missingness.** Train on your own data with realistic
    "this lab did not measure that" masking and a reconstruction task.
 
-```mermaid
-flowchart LR
-    A["Table with NaN<br/>(7 features, some rows have 3 or 4)"] --> B["TabPFN encoder"]
-    B --> C["18 attention layers<br/>+ observed-only mask<br/>+ pattern bias"]
-    C --> D["Prediction"]
-```
+![TabPFN-M architecture](docs/figures/tabpfn_m_architecture.png)
 
 ## Install
 
