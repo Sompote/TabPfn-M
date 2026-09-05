@@ -60,9 +60,11 @@ flowchart TB
 | fine-tuning | `tabpfn_m/finetune.py` | `FinetunedTabPFNMRegressor`, `_param_group_optimizer` | |
 | switches | `tabpfn_m/config.py` | `TabPFNMConfig`, `AugmentConfig` | |
 
-### Tensor shapes (B batch of datasets, S data rows, T = 64 thinking rows,
+### Tensor shapes
+
+Notation: B datasets in the batch, S data rows, T = 64 thinking rows,
 R = T + S, F raw features, n = 3 features per group, G = ceil(F / n) groups,
-C = G + 1 tokens per row, E = 192)
+C = G + 1 tokens per row (the last is the target), E = 192 embedding size.
 
 - model input `x`: (S, B, F) with NaN; `y`: (S_train, B)
 - `token_mask_BRC`: bool (B, R, C). False where a row's feature group has no
