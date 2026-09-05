@@ -1,0 +1,10 @@
+{
+  "out": "results/zero_shot",
+  "seeds": "[0, 1, 2]",
+  "designs": "['none', 'mcar30', 'mcar50', 'block3-4of7', 'block2-5']",
+  "methods": "['hgb', 'tabpfn', 'tabpfn_mean', 'm_mask', 'm_mask_bias', 'm_bias']",
+  "datasets": "None",
+  "max_rows": "600",
+  "n_estimators": "4",
+  "weights": "None"
+}

@@ -1,0 +1,4 @@
+tabpfn_complete_train_complete_test           R2 0.9856
+tabpfn_block_train_block_test                 R2 0.3672
+tabpfn_m_zero_shot_mask_bias1                 R2 0.3694
+Finetuning Epoch 1/30:   0%|          | 0/1 [00:00<?, ?it/s]Finetuning Epoch 1/30:   0%|          | 0/1 [00:02<?, ?it/s, loss=1.2052]Finetuning Epoch 1/30: 100%|██████████| 1/1 [00:02<00:00,  2.00s/it, loss=1.2052]Finetuning Epoch 1/30: 100%|██████████| 1/1 [00:02<00:00,  2.00s/it, loss=1.2052]

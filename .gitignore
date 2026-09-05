@@ -1,0 +1,7 @@
+tabpfn/
+.venv/
+__pycache__/
+*.pyc
+results/**/*.ckpt
+results/**/*.pt
+.pytest_cache/
